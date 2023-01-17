@@ -1,0 +1,93 @@
+# Adrian Gibbs 1206191606
+# Date: January 15, 2023 
+
+print('Adrian Gibbs 1206191606')
+
+# values for the table header 
+header = ['a', 'b', 'c', 'd', 'a → b', 'b → c', 'c → d', 'a → (b→c)', '(a→b) → (c→d)', '(a → (b→c)) → d', 'SAME TRUTH VALUE']
+
+# use of 'lists' to assign truth values to each variable 
+a = ['T', 'T', 'T', 'T', 'T', 'T', 'T', 'T', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F'] 
+b = ['T', 'T', 'T', 'T', 'F', 'F', 'F', 'F', 'T', 'T', 'T', 'T', 'F', 'F', 'F', 'F'] 
+c = ['T', 'T', 'F', 'F', 'T', 'T', 'F', 'F', 'T', 'T', 'F', 'F', 'T', 'T', 'F', 'F'] 
+d = ['T', 'F', 'T', 'F', 'T', 'F', 'T', 'F', 'T', 'F', 'T', 'F', 'T', 'F', 'T', 'F'] 
+
+# these empty lists will be populated using logic in the loops below 
+a_implies_b = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''] 
+b_implies_c = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''] 
+c_implies_d = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''] 
+a_b_implies_c_d = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+a_implies_b_c = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+a__b_c_implies_d = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+
+for i in range(len(header)):
+    print(header[i], end = '\t ')
+
+# line break after header 
+print('')
+
+# using range to iterate 16 times through the loop for each row in the truth table 
+for i in range(16):
+    print(a[i], end = '\t ') 
+    print(b[i], end = '\t ') 
+    print(c[i], end = '\t ') 
+    print(d[i], end = '\t ') 
+    
+    # checks truth value for a → b, updates the list, and prints the result 
+    if a[i] == 'F':
+        a_implies_b[i] = 'T'
+    if a[i] == 'T' and b[i] == 'T':
+        a_implies_b[i] = 'T'
+    if a[i] == 'T' and b[i] == 'F': 
+        a_implies_b[i] = 'F'
+    print(a_implies_b[i], end = '\t ') 
+
+    # checks truth value for b → c, updates the list, and prints the result 
+    if b[i] == 'F':
+        b_implies_c[i] = 'T'
+    if b[i] == 'T' and c[i] == 'T':
+        b_implies_c[i] = 'T'
+    if b[i] == 'T' and c[i] == 'F': 
+        b_implies_c[i] = 'F'
+    print(b_implies_c[i], end = '\t ') 
+
+    # checks truth value for c → d, updates the list, and prints the result 
+    if c[i] == 'F':
+        c_implies_d[i] = 'T'
+    if c[i] == 'T' and d[i] == 'T':
+        c_implies_d[i] = 'T'
+    if c[i] == 'T' and d[i] == 'F': 
+        c_implies_d[i] = 'F'
+    print(c_implies_d[i], end = '\t ') 
+
+    # checks truth value for a → (b →  c) updates the list, and prints the result 
+    if a[i] == 'T' and b_implies_c[i] == 'F':
+        a_implies_b_c[i] = 'F'
+    if a[i] == 'T' and b_implies_c[i] == 'T':
+        a_implies_b_c[i] = 'T' 
+    if a[i] == 'F':
+        a_implies_b_c[i] = 'T'
+    print(a_implies_b_c[i], end = '\t\t ')
+
+    # checks truth value for (a → b) → (c → d), updates the list, and prints the result 
+    if a_implies_b[i] == 'F':
+        a_b_implies_c_d[i] = 'T'
+    if a_implies_b[i] == 'T' and c_implies_d[i] == 'T':
+        a_b_implies_c_d[i] = 'T'
+    if a_implies_b[i] == 'T' and c_implies_d[i] == 'F':
+        a_b_implies_c_d[i] = 'F'
+    print(a_b_implies_c_d[i], end = '\t\t ')
+
+    # checks truth value for (a → (b →  c)) →  d, updates the list, and prints the result 
+    if a_implies_b_c[i] == 'T' and d[i] == 'F':
+        a__b_c_implies_d[i] = 'F'
+    if a_implies_b_c[i] == 'T' and d[i] == 'T':
+        a__b_c_implies_d[i] = 'T'
+    if a_implies_b_c[i] == 'F':
+        a__b_c_implies_d[i] = 'T'
+    print(a__b_c_implies_d[i], end = '\t\t\t ')
+
+    # highlights if the statements have different truth values 
+    if a_b_implies_c_d[i] != a__b_c_implies_d[i]:
+        print('NO')
+    else: print('YES')
